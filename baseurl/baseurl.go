@@ -12,6 +12,7 @@ import (
 type BaseURL struct {
 	version string
 	service string
+	project string
 	domain  string
 }
 
@@ -29,10 +30,12 @@ func New(c context.Context, options ...Option) (*url.URL, error) {
 	}
 
 	hostName := ""
-	if b.domain == "" {
-		hostName = appengine.DefaultVersionHostname(c)
-	} else {
+	if b.domain != "" {
 		hostName = b.domain
+	} else if b.project != "" {
+		hostName = fmt.Sprintf("%s.appspot.com", b.project)
+	} else {
+		hostName = appengine.DefaultVersionHostname(c)
 	}
 
 	if b.service != "" {
@@ -46,6 +49,14 @@ func New(c context.Context, options ...Option) (*url.URL, error) {
 	baseURL := fmt.Sprintf("https://%s", hostName)
 
 	return url.Parse(baseURL)
+}
+
+// WithProject function
+func WithProject(p string) Option {
+	return func(b *BaseURL) error {
+		b.project = p
+		return nil
+	}
 }
 
 // WithService function
