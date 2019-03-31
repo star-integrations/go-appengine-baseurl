@@ -21,15 +21,15 @@ import (
 )
 
 func main() {
-  ...
+	...
 	u, err := baseurl.New(ctx)
-  u.String() // https://YOUR_PROJECT_ID.appspot.com
+	u.String() // https://YOUR_PROJECT_ID.appspot.com
 
 	u, err = baseurl.New(ctx, WithService("api"))
-  u.String() // https://api-dot-YOUR_PROJECT_ID.appspot.com
+	u.String() // https://api-dot-YOUR_PROJECT_ID.appspot.com
 
 	u, err = baseurl.New(ctx, WithVersion("1"), WithService("api"))
-  u.String() // https://1-dot-api-dot-YOUR_PROJECT_ID.appspot.com
+	u.String() // https://1-dot-api-dot-YOUR_PROJECT_ID.appspot.com
 	...
 }
 
