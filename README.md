@@ -30,6 +30,9 @@ func main() {
 
 	u, err = baseurl.New(ctx, WithVersion("1"), WithService("api"))
 	u.String() // https://1-dot-api-dot-YOUR_PROJECT_ID.appspot.com
+
+	u, err = baseurl.New(ctx, WithDomain("SOME_PROJECT_ID.appspot.com"), WithService("api"))
+	u.String() // https://api-dot-SOME_PROJECT_ID.appspot.com
 	...
 }
 
