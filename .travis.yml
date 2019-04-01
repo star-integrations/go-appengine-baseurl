@@ -1,0 +1,36 @@
+language: go
+
+go:
+  - "1.x"
+  - "1.11.x"
+  - master
+
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.cache/go-build
+    - $HOME/gopath/pkg/mod
+    - $HOME/google-cloud-sdk
+
+env:
+  global:
+    - GO111MODULE=on
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+before_install:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf "$HOME/google-cloud-sdk"; curl https://sdk.cloud.google.com | bash > /dev/null; fi
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud version
+
+script:
+  - diff -u <(echo -n) <(gofmt -d -s .)
+  - go generate -x ./... && git diff --exit-code; code=$?; git checkout -- .; (exit $code) # Check that go generate ./... produces a zero diff; clean up any changes afterwards.
+  - go vet ./...
+  - go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

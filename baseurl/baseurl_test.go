@@ -3,12 +3,18 @@ package baseurl
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/aetest"
 )
 
 func TestNew(t *testing.T) {
+	inst, err := aetest.NewInstance(&aetest.Options{StartupTimeout: 120 * time.Second})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer inst.Close()
 	c, done, err := aetest.NewContext()
 	if err != nil {
 		t.Fatal(err)
