@@ -18,6 +18,11 @@ cache:
 env:
   global:
     - GO111MODULE=on
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+install:
+  - curl https://sdk.cloud.google.com | bash
+  - gcloud components install app-engine-go
 
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
