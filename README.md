@@ -1,7 +1,7 @@
 # go-appengine-baseurl
 
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/star-integrations/go-appengine-baseurl/baseurl)
-[![Build Status](https://travis-ci.org/star-integrations/go-appengine-baseurl.svg?branch=master)](https://travis-ci.org/star-integrations/go-appengine-baseurl)
+[![Build Status](https://storage.googleapis.com/cloud-build-result/star-integrations-ci/github_star-integrations_go-appengine-baseurl/master/badge.svg)](https://travis-ci.org/star-integrations/go-appengine-baseurl)
 [![codecov](https://codecov.io/gh/star-integrations/go-appengine-baseurl/branch/master/graph/badge.svg)](https://codecov.io/gh/star-integrations/go-appengine-baseurl)
 [![Go Report Card](https://goreportcard.com/badge/github.com/star-integrations/go-appengine-baseurl)](https://goreportcard.com/report/github.com/star-integrations/go-appengine-baseurl)
 
