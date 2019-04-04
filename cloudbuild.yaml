@@ -4,9 +4,17 @@ steps:
   args:
   - -c
   - |
+    echo == install gcc ==
+    apt-get -qq update
+    apt-get -qq install gcc make
+    echo == install golang ==
+    curl -s https://dl.google.com/go/go1.11.linux-amd64.tar.gz -o /go1.11.linux-amd64.tar.gz
+    tar -C /usr/local -xzf /go1.11.linux-amd64.tar.gz
+    export PATH=$$PATH:/usr/local/go/bin
+    echo == go test ==
     mv `find /workspace -maxdepth 1 ! -name go | grep /workspace/` .
-    python /builder/google-cloud-sdk/platform/google_appengine/goapp get google.golang.org/appengine
-    python /builder/google-cloud-sdk/platform/google_appengine/goapp test github.com/star-integrations/go-appengine-baseurl/baseurl
+    go test github.com/star-integrations/go-appengine-baseurl/baseurl
   dir: '/workspace/go/src/github.com/star-integrations/go-appengine-baseurl'
   env:
     - 'GOPATH=/workspace/go'
+    - 'GO111MODULE=on'
