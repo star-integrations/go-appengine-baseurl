@@ -1,33 +1,12 @@
 steps:
-
-# install AppEngine SDK
-- name: 'gcr.io/cloud-builders/git'
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: bash
-  volumes:
-  - name: 'sdk'
-    path: '/sdk'
   args:
-    - -c
-    - |
-      apt-get -qq update
-      apt-get -qq install unzip
-      curl -s https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.70.zip -o /sdk/goappsdk.zip
-      unzip -qq /sdk/goappsdk.zip -d /sdk
-
-# go test
-- name: 'gcr.io/cloud-builders/go'
-  entrypoint: sh
-  volumes:
-  - name: 'sdk'
-    path: '/sdk'
-  args:
-    - -c
-    - |
-      export PATH=$$PATH:/sdk/go_appengine
-      mv `find /workspace -maxdepth 1 ! -name go` ./
-      go mod tidy
-      go test github.com/star-integrations/go-appengine-baseurl/baseurl
-  dir: 'go/src/github.com/star-integrations/go-appengine-baseurl'
+  - -c
+  - |
+    mv `find /workspace -maxdepth 1 ! -name go | grep /workspace/` .
+    python /builder/google-cloud-sdk/platform/google_appengine/goapp get google.golang.org/appengine
+    python /builder/google-cloud-sdk/platform/google_appengine/goapp test github.com/star-integrations/go-appengine-baseurl/baseurl
+  dir: '/workspace/go/src/github.com/star-integrations/go-appengine-baseurl'
   env:
     - 'GOPATH=/workspace/go'
-    - 'GO111MODULE=on'

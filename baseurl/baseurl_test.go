@@ -22,7 +22,7 @@ func TestNew(t *testing.T) {
 	defer done()
 
 	// Default
-	if url, err := New(c); err != nil || url.String() != "https:" {
+	if url, err := New(c); err != nil || url.String() != "https://" {
 		t.Errorf("unmatch DefaultVersionHostname")
 	}
 
